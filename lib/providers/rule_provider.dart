@@ -104,6 +104,8 @@
 //   }
 // }
 
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import '../models/os_card.dart';
@@ -135,30 +137,82 @@ class RuleProvider extends ChangeNotifier {
   int get totalDaysOpened => _storage.getTotalDaysOpened();
   int get rulesViewed => _storage.getRulesViewed();
 
+  // Add these properties for initialization tracking
+  bool _isInitializing = false;
+  bool get isInitializing => _isInitializing;
+  Completer<void> _initCompleter = Completer<void>();
+  Future<void> get initializationDone => _initCompleter.future;
+
+  // Future<void> init() async {
+  //   await _storage.init();
+  //   await _notification.init();
+  //   await _audio.init();
+  //   if (_storage.shouldRotateRule()) {
+  //     await _rotateRule();
+  //   } else {
+  //     _currentRuleIndex = _storage.getCurrentRuleIndex();
+  //     _currentRule = rulesData[_currentRuleIndex];
+  //     _currentCardIndex = _storage.getCurrentCardIndex();
+  //   }
+  //   // Load yesterday's rule if available
+  //   final yesterdayIndex = _storage.getYesterdayRuleIndex();
+  //   if (yesterdayIndex != null && yesterdayIndex < rulesData.length) {
+  //     _yesterdayRule = rulesData[yesterdayIndex];
+  //   }
+  //   await _notification.scheduleDailyNotification(_currentRule!.title);
+  //   await _storage.incrementRulesViewed();
+  //   _isInitialized = true;
+  //   notifyListeners();
+  // }
+
   Future<void> init() async {
-    await _storage.init();
-    await _notification.init();
-    await _audio.init();
+    // Prevent multiple initializations
+    if (_isInitializing || _isInitialized) return;
 
-    if (_storage.shouldRotateRule()) {
-      await _rotateRule();
-    } else {
-      _currentRuleIndex = _storage.getCurrentRuleIndex();
-      _currentRule = rulesData[_currentRuleIndex];
-      _currentCardIndex = _storage.getCurrentCardIndex();
+    _isInitializing = true;
+
+    try {
+      await _storage.init();
+      await _notification.init();
+      await _audio.init();
+
+      if (_storage.shouldRotateRule()) {
+        await _rotateRule();
+      } else {
+        _currentRuleIndex = _storage.getCurrentRuleIndex();
+        _currentRule = rulesData[_currentRuleIndex];
+        _currentCardIndex = _storage.getCurrentCardIndex();
+      }
+
+      // Load yesterday's rule if available
+      final yesterdayIndex = _storage.getYesterdayRuleIndex();
+      if (yesterdayIndex != null && yesterdayIndex < rulesData.length) {
+        _yesterdayRule = rulesData[yesterdayIndex];
+      }
+
+      await _notification.scheduleDailyNotification(_currentRule!.title);
+      await _storage.incrementRulesViewed();
+
+      _isInitialized = true;
+      _isInitializing = false;
+
+      // Complete the completer to signal initialization is done
+      if (!_initCompleter.isCompleted) {
+        _initCompleter.complete();
+      }
+      
+      notifyListeners();
+    } catch (error, stackTrace) {
+      _isInitializing = false;
+
+      // Complete with error
+      if (!_initCompleter.isCompleted) {
+        _initCompleter.completeError(error, stackTrace);
+      }
+
+      // Re-throw to allow error handling at app level
+      rethrow;
     }
-
-    // Load yesterday's rule if available
-    final yesterdayIndex = _storage.getYesterdayRuleIndex();
-    if (yesterdayIndex != null && yesterdayIndex < rulesData.length) {
-      _yesterdayRule = rulesData[yesterdayIndex];
-    }
-
-    await _notification.scheduleDailyNotification(_currentRule!.title);
-    await _storage.incrementRulesViewed();
-
-    _isInitialized = true;
-    notifyListeners();
   }
 
   Future<void> _rotateRule() async {

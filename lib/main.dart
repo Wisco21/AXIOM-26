@@ -1,3 +1,5 @@
+import 'package:axiom/screens/splash_screen.dart';
+import 'package:axiom/widgets/error_boundary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -5,7 +7,6 @@ import 'providers/rule_provider.dart';
 import 'services/storage_service.dart';
 import 'services/notification_service.dart';
 import 'services/audio_service.dart';
-import 'screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,22 +16,36 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]);
 
-  // Initialize services
-  final storage = StorageService();
-  final notification = NotificationService();
-  final audio = AudioService();
-
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => RuleProvider(storage, notification, audio)..init(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => MindChangeProvider(),
-        ),
-      ],
-      child: const AXIOM26(),
+    ErrorBoundary(
+      errorBuilder: (context, error) {
+        // Fallback error screen
+        return MaterialApp(
+          home: Scaffold(
+            backgroundColor: Colors.black,
+            body: Center(
+              child: Text(
+                'App failed to initialize\n$error',
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        );
+      },
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => RuleProvider(
+              StorageService(),
+              NotificationService(),
+              AudioService(),
+            )..init(),
+          ),
+          ChangeNotifierProvider(create: (_) => MindChangeProvider()),
+        ],
+        child: const AXIOM26(),
+      ),
     ),
   );
 }
@@ -52,7 +67,7 @@ class AXIOM26 extends StatelessWidget {
           bodyMedium: TextStyle(color: Colors.white),
         ),
       ),
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }
