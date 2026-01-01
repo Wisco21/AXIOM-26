@@ -198,25 +198,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   }
 
 
-// Widget _buildLoadingIndicator() {
-//   return SizedBox(
-//     width: 150,
-//     height: 150,
-//     child: Lottie.asset(
-//       'assets/animation/loading1.json', // Your Lottie animation file
-//       fit: BoxFit.contain,
-//       repeat: true,
-//       animate: true,
-//       controller: _controller,
-//       onLoaded: (composition) {
-//           _controller.repeat(); // loop
-//         }
-//     ),
-
-//   );
-// }
-
-
 Widget _buildLoadingIndicator() {
   return SizedBox(
     width: 150,

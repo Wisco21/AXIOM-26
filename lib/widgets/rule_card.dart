@@ -184,8 +184,6 @@ class RuleCard extends StatelessWidget {
   }
 }
 
-// import 'package:flutter/material.dart';
-// import '../models/os_card.dart';
 
 // Card 1: Title + Identity Law + Why
 class RuleCard1 extends StatelessWidget {
