@@ -1,6 +1,5 @@
 // screens/splash_screen.dart
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import '../providers/rule_provider.dart';
 import 'home_screen.dart';
@@ -213,27 +212,7 @@ Widget _buildLoadingIndicator() {
             ),
           ),
         ),
-        // Center(
-        //   child: TweenAnimationBuilder<double>(
-        //         tween: Tween(begin: 0.0, end: 1.0),
-        //         duration: const Duration(milliseconds: 1500),
-        //         builder: (context, value, child) {
-        //           return Opacity(
-        //             opacity: 1 - value,
-        //             child: Transform.translate(
-        //               offset: Offset(15, -40 * value),
-        //               child:Image.asset(
-        //                 'assets/splash2.png',
-        //                 width: 25,
-        //                 height: 25,
-        //                 color: Colors.amber.withOpacity(0.9),
-        //               ),
-        //             ),
-        //           );
-        //         },
-        //         // repeat: true,
-        //       ),
-        // ),
+      
             Center(
               child: TweenAnimationBuilder<double>(
                 tween: Tween(begin: 0.0, end: 1.0),

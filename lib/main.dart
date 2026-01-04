@@ -1,17 +1,26 @@
+import 'package:axiom/providers/focus_provider.dart';
+import 'package:axiom/providers/perspective_change_provider.dart';
 import 'package:axiom/screens/splash_screen.dart';
+import 'package:axiom/services/focus_storage_service.dart';
+import 'package:axiom/services/perspective_change_storage_service.dart';
+import 'package:axiom/services/rule_storage_service.dart';
 import 'package:axiom/widgets/error_boundary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'providers/rule_provider.dart';
-import 'services/storage_service.dart';
 import 'services/notification_service.dart';
 import 'services/audio_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Force portrait orientation
+  // TEMPORARY: Clear old data during development
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.clear(); // Remove this line once you've cleared old data
+
+  
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
@@ -19,7 +28,6 @@ void main() async {
   runApp(
     ErrorBoundary(
       errorBuilder: (context, error) {
-        // Fallback error screen
         return MaterialApp(
           home: Scaffold(
             backgroundColor: Colors.black,
@@ -37,23 +45,28 @@ void main() async {
         providers: [
           ChangeNotifierProvider(
             create: (_) => RuleProvider(
-              StorageService(),
+              RuleStorageService(),
               NotificationService(),
               AudioService(),
             )..init(),
           ),
-          ChangeNotifierProvider(create: (_) => MindChangeProvider()),
+          ChangeNotifierProvider(
+            create: (_) =>
+                PerspectiveChangeProvider(PerspectiveChangeStorageService())
+                  ..init(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => FocusProvider(FocusStorageService())..loadToday(),
+          ),
         ],
         child: const AXIOM26(),
       ),
     ),
   );
 }
-
 class AXIOM26 extends StatelessWidget {
-  const AXIOM26({super.key});
-
-  @override
+const AXIOM26({super.key});
+@override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'AXIOM-26',

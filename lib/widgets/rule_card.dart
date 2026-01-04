@@ -1,4 +1,6 @@
+// Updated RuleCard widget
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import '../models/os_card.dart';
 
 class RuleCard extends StatelessWidget {
@@ -14,11 +16,10 @@ class RuleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(16),
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
         color: const Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFF2A2A2A), width: 1),
+        border: Border.all(color: Colors.white.withOpacity(0.1)),
       ),
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -31,22 +32,30 @@ class RuleCard extends StatelessWidget {
               Text(
                 rule.title.toUpperCase(),
                 style: const TextStyle(
-                  color: Color(0xFFE0E0E0),
+                  color: Color(0xFF00CCCC),
                   fontSize: 14,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                   letterSpacing: 2,
                 ),
               ),
               const SizedBox(height: 24),
 
               // Identity Law
-              Text(
-                rule.identityLaw,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                  height: 1.3,
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: const Color(0xFF0A0A0A),
+                  border: Border.all(color: Colors.white.withOpacity(0.05)),
+                ),
+                child: Text(
+                  rule.identityLaw,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w700,
+                    height: 1.3,
+                  ),
                 ),
               ),
               const SizedBox(height: 32),
@@ -65,82 +74,143 @@ class RuleCard extends StatelessWidget {
 
               // Excuse & Rebuttal
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
                   color: const Color(0xFF0A0A0A),
-                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.white.withOpacity(0.05)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      rule.excuse,
-                      style: const TextStyle(
-                        color: Color(0xFF666666),
-                        fontSize: 14,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
                     Row(
                       children: [
-                        const Icon(
-                          Icons.arrow_forward,
-                          color: Color(0xFFFF6B6B),
-                          size: 16,
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            rule.rebuttal,
-                            style: const TextStyle(
-                              color: Color(0xFFFF6B6B),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
+                        Container(
+                          width: 24,
+                          height: 24,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            color: const Color(0xFFFF5555).withOpacity(0.1),
+                            border: Border.all(
+                              color: const Color(0xFFFF5555).withOpacity(0.2),
+                            ),
+                          ),
+                          child: const Center(
+                            child: Icon(
+                              Iconsax.close_circle,
+                              color: Color(0xFFFF5555),
+                              size: 12,
                             ),
                           ),
                         ),
+                        const SizedBox(width: 12),
+                        const Text(
+                          'EXCUSE',
+                          style: TextStyle(
+                            color: Color(0xFFFF5555),
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 1,
+                          ),
+                        ),
                       ],
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      rule.excuse,
+                      style: const TextStyle(
+                        color: Color(0xFF888888),
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
+                        height: 1.5,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Container(
+                          width: 24,
+                          height: 24,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            color: const Color(0xFF00FF88).withOpacity(0.1),
+                            border: Border.all(
+                              color: const Color(0xFF00FF88).withOpacity(0.2),
+                            ),
+                          ),
+                          child: const Center(
+                            child: Icon(
+                              Iconsax.tick_circle,
+                              color: Color(0xFF00FF88),
+                              size: 12,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        const Text(
+                          'REBUTTAL',
+                          style: TextStyle(
+                            color: Color(0xFF00FF88),
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      rule.rebuttal,
+                      style: const TextStyle(
+                        color: Color(0xFF00FF88),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        height: 1.5,
+                      ),
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 32),
 
-              // Mantra with Audio Button
+              // Mantra
               Center(
                 child: GestureDetector(
                   onTap: onAudioTap,
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 16,
+                      horizontal: 32,
+                      vertical: 20,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF2A2A2A),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: const Color(0xFF3A3A3A),
-                        width: 1,
-                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      color: const Color(0xFF00CCCC),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF00CCCC).withOpacity(0.3),
+                          blurRadius: 20,
+                          spreadRadius: 2,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const Icon(
-                          Icons.volume_up,
-                          color: Colors.white,
-                          size: 24,
+                          Iconsax.volume_high,
+                          color: Colors.black,
+                          size: 22,
                         ),
                         const SizedBox(width: 16),
                         Flexible(
                           child: Text(
                             rule.mantra.toUpperCase(),
                             style: const TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: 1.5,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 1.2,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -161,22 +231,30 @@ class RuleCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: const TextStyle(
-            color: Color(0xFF666666),
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 1.5,
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: const Color(0xFF0A0A0A),
+            border: Border.all(color: Colors.white.withOpacity(0.05)),
+          ),
+          child: Text(
+            label,
+            style: const TextStyle(
+              color: Color(0xFF00CCCC),
+              fontSize: 11,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 1,
+            ),
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
         Text(
           content,
           style: const TextStyle(
             color: Color(0xFFCCCCCC),
             fontSize: 15,
-            height: 1.5,
+            height: 1.6,
           ),
         ),
       ],
@@ -184,8 +262,7 @@ class RuleCard extends StatelessWidget {
   }
 }
 
-
-// Card 1: Title + Identity Law + Why
+// Updated RuleCard1
 class RuleCard1 extends StatelessWidget {
   final OSCard rule;
 
@@ -198,26 +275,44 @@ class RuleCard1 extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            rule.title.toUpperCase(),
-            style: const TextStyle(
-              color: Color(0xFFE0E0E0),
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 3,
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: const Color(0xFF00CCCC).withOpacity(0.1),
+              border: Border.all(
+                color: const Color(0xFF00CCCC).withOpacity(0.2),
+              ),
+            ),
+            child: Text(
+              rule.title.toUpperCase(),
+              style: const TextStyle(
+                color: Color(0xFF00CCCC),
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 1.5,
+              ),
             ),
           ),
           const SizedBox(height: 40),
-          Text(
-            rule.identityLaw,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 28,
-              fontWeight: FontWeight.w800,
-              height: 1.3,
+          Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: const Color(0xFF0A0A0A),
+              border: Border.all(color: Colors.white.withOpacity(0.05)),
+            ),
+            child: Text(
+              rule.identityLaw,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 28,
+                fontWeight: FontWeight.w800,
+                height: 1.2,
+              ),
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 48),
           _buildSection('WHY', rule.why),
         ],
       ),
@@ -232,19 +327,26 @@ class RuleCard1 extends StatelessWidget {
           label,
           style: const TextStyle(
             color: Color(0xFF666666),
-            fontSize: 12,
+            fontSize: 13,
             fontWeight: FontWeight.w700,
-            letterSpacing: 2,
+            letterSpacing: 1,
           ),
         ),
-        const SizedBox(height: 12),
-        Text(
-          content,
-          style: const TextStyle(
-            color: Color(0xFFCCCCCC),
-            fontSize: 17,
-            height: 1.5,
-            fontWeight: FontWeight.w500,
+        const SizedBox(height: 16),
+        Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: const Color(0xFF0A0A0A),
+            border: Border.all(color: Colors.white.withOpacity(0.05)),
+          ),
+          child: Text(
+            content,
+            style: const TextStyle(
+              color: Color(0xFFCCCCCC),
+              fontSize: 17,
+              height: 1.6,
+            ),
           ),
         ),
       ],
@@ -253,19 +355,27 @@ class RuleCard1 extends StatelessWidget {
 
   Widget _buildCardContainer({required Widget child}) {
     return Container(
-      margin: const EdgeInsets.all(16),
+      margin: const EdgeInsets.all(24),
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
         color: const Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFF2A2A2A), width: 1),
+        border: Border.all(color: Colors.white.withOpacity(0.1), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.5),
+            blurRadius: 30,
+            spreadRadius: 2,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
       child: child,
     );
   }
 }
 
-// Card 2: Daily Standard
+// Updated RuleCard2
 class RuleCard2 extends StatelessWidget {
   final OSCard rule;
 
@@ -278,33 +388,78 @@ class RuleCard2 extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            rule.title.toUpperCase(),
-            style: const TextStyle(
-              color: Color(0xFF666666),
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 2,
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: const Color(0xFF00CCCC).withOpacity(0.1),
+              border: Border.all(
+                color: const Color(0xFF00CCCC).withOpacity(0.2),
+              ),
+            ),
+            child: Text(
+              rule.title.toUpperCase(),
+              style: const TextStyle(
+                color: Color(0xFF00CCCC),
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 1.5,
+              ),
             ),
           ),
-          const SizedBox(height: 40),
-          const Text(
-            'DAILY STANDARD',
-            style: TextStyle(
-              color: Color(0xFFE0E0E0),
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 2,
+          const SizedBox(height: 48),
+          Center(
+            child: Column(
+              children: [
+                Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: const Color(0xFFFF9900).withOpacity(0.1),
+                    border: Border.all(
+                      color: const Color(0xFFFF9900).withOpacity(0.2),
+                    ),
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Iconsax.sun_1,
+                      color: Color(0xFFFF9900),
+                      size: 24,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'DAILY STANDARD',
+                  style: TextStyle(
+                    color: Color(0xFFFF9900),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 2,
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 20),
-          Text(
-            rule.daily,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              height: 1.5,
-              fontWeight: FontWeight.w600,
+          const SizedBox(height: 32),
+          Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: const Color(0xFF0A0A0A),
+              border: Border.all(
+                color: const Color(0xFFFF9900).withOpacity(0.2),
+              ),
+            ),
+            child: Text(
+              rule.daily,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+                height: 1.5,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],
@@ -314,19 +469,27 @@ class RuleCard2 extends StatelessWidget {
 
   Widget _buildCardContainer({required Widget child}) {
     return Container(
-      margin: const EdgeInsets.all(16),
+      margin: const EdgeInsets.all(24),
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
         color: const Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFF2A2A2A), width: 1),
+        border: Border.all(color: Colors.white.withOpacity(0.1), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.5),
+            blurRadius: 30,
+            spreadRadius: 2,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
       child: child,
     );
   }
 }
 
-// Card 3: Weekly Standard
+// Updated RuleCard3
 class RuleCard3 extends StatelessWidget {
   final OSCard rule;
 
@@ -339,33 +502,78 @@ class RuleCard3 extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            rule.title.toUpperCase(),
-            style: const TextStyle(
-              color: Color(0xFF666666),
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 2,
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: const Color(0xFF00CCCC).withOpacity(0.1),
+              border: Border.all(
+                color: const Color(0xFF00CCCC).withOpacity(0.2),
+              ),
+            ),
+            child: Text(
+              rule.title.toUpperCase(),
+              style: const TextStyle(
+                color: Color(0xFF00CCCC),
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 1.5,
+              ),
             ),
           ),
-          const SizedBox(height: 40),
-          const Text(
-            'WEEKLY STANDARD',
-            style: TextStyle(
-              color: Color(0xFFE0E0E0),
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 2,
+          const SizedBox(height: 48),
+          Center(
+            child: Column(
+              children: [
+                Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: const Color(0xFFFF9900).withOpacity(0.1),
+                    border: Border.all(
+                      color: const Color(0xFFFF9900).withOpacity(0.2),
+                    ),
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Iconsax.calendar,
+                      color: Color(0xFFFF9900),
+                      size: 24,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'WEEKLY STANDARD',
+                  style: TextStyle(
+                    color: Color(0xFFFF9900),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 2,
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 20),
-          Text(
-            rule.weekly,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              height: 1.5,
-              fontWeight: FontWeight.w600,
+          const SizedBox(height: 32),
+          Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: const Color(0xFF0A0A0A),
+              border: Border.all(
+                color: const Color(0xFFFF9900).withOpacity(0.2),
+              ),
+            ),
+            child: Text(
+              rule.weekly,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+                height: 1.5,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],
@@ -375,19 +583,27 @@ class RuleCard3 extends StatelessWidget {
 
   Widget _buildCardContainer({required Widget child}) {
     return Container(
-      margin: const EdgeInsets.all(16),
+      margin: const EdgeInsets.all(24),
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
         color: const Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFF2A2A2A), width: 1),
+        border: Border.all(color: Colors.white.withOpacity(0.1), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.5),
+            blurRadius: 30,
+            spreadRadius: 2,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
       child: child,
     );
   }
 }
 
-// Card 4: Excuse, Rebuttal, Mantra
+// Updated RuleCard4
 class RuleCard4 extends StatelessWidget {
   final OSCard rule;
   final VoidCallback onAudioTap;
@@ -401,89 +617,159 @@ class RuleCard4 extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            rule.title.toUpperCase(),
-            style: const TextStyle(
-              color: Color(0xFF666666),
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 2,
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: const Color(0xFF00CCCC).withOpacity(0.1),
+              border: Border.all(
+                color: const Color(0xFF00CCCC).withOpacity(0.2),
+              ),
+            ),
+            child: Text(
+              rule.title.toUpperCase(),
+              style: const TextStyle(
+                color: Color(0xFF00CCCC),
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 1.5,
+              ),
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 48),
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
               color: const Color(0xFF0A0A0A),
-              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.white.withOpacity(0.05)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  rule.excuse,
-                  style: const TextStyle(
-                    color: Color(0xFF666666),
-                    fontSize: 16,
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 16),
                 Row(
                   children: [
-                    const Icon(
-                      Icons.arrow_forward,
-                      color: Color(0xFFFF6B6B),
-                      size: 18,
+                    Container(
+                      width: 32,
+                      height: 32,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: const Color(0xFFFF5555).withOpacity(0.1),
+                        border: Border.all(
+                          color: const Color(0xFFFF5555).withOpacity(0.2),
+                        ),
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          Iconsax.close_circle,
+                          color: Color(0xFFFF5555),
+                          size: 16,
+                        ),
+                      ),
                     ),
                     const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        rule.rebuttal,
-                        style: const TextStyle(
-                          color: Color(0xFFFF6B6B),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                        ),
+                    const Text(
+                      'EXCUSE',
+                      style: TextStyle(
+                        color: Color(0xFFFF5555),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1,
                       ),
                     ),
                   ],
                 ),
+                const SizedBox(height: 16),
+                Text(
+                  rule.excuse,
+                  style: const TextStyle(
+                    color: Color(0xFF888888),
+                    fontSize: 18,
+                    fontStyle: FontStyle.italic,
+                    height: 1.5,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  children: [
+                    Container(
+                      width: 32,
+                      height: 32,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: const Color(0xFF00FF88).withOpacity(0.1),
+                        border: Border.all(
+                          color: const Color(0xFF00FF88).withOpacity(0.2),
+                        ),
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          Iconsax.tick_circle,
+                          color: Color(0xFF00FF88),
+                          size: 16,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    const Text(
+                      'REBUTTAL',
+                      style: TextStyle(
+                        color: Color(0xFF00FF88),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  rule.rebuttal,
+                  style: const TextStyle(
+                    color: Color(0xFF00FF88),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    height: 1.4,
+                  ),
+                ),
               ],
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 48),
           Center(
             child: GestureDetector(
               onTap: onAudioTap,
               child: Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 28,
+                  horizontal: 32,
                   vertical: 20,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF2A2A2A),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: const Color(0xFF3A3A3A),
-                    width: 1,
-                  ),
+                  borderRadius: BorderRadius.circular(16),
+                  color: const Color(0xFF00CCCC),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF00CCCC).withOpacity(0.3),
+                      blurRadius: 30,
+                      spreadRadius: 2,
+                      offset: const Offset(0, 10),
+                    ),
+                  ],
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Icon(
-                      Icons.volume_up,
-                      color: Colors.white,
-                      size: 28,
+                      Iconsax.volume_high,
+                      color: Colors.black,
+                      size: 24,
                     ),
                     const SizedBox(width: 16),
                     Flexible(
                       child: Text(
                         rule.mantra.toUpperCase(),
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 18,
                           fontWeight: FontWeight.w800,
                           letterSpacing: 1.5,
@@ -503,14 +789,23 @@ class RuleCard4 extends StatelessWidget {
 
   Widget _buildCardContainer({required Widget child}) {
     return Container(
-      margin: const EdgeInsets.all(16),
+      margin: const EdgeInsets.all(24),
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
         color: const Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFF2A2A2A), width: 1),
+        border: Border.all(color: Colors.white.withOpacity(0.1), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.5),
+            blurRadius: 30,
+            spreadRadius: 2,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
       child: child,
     );
   }
 }
+

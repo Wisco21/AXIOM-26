@@ -46,31 +46,3 @@ class OSCard {
         mantra: json['mantra'],
       );
 }
-
-class MindChangeCard {
-  final String id;
-  final String dont;
-  final String say;
-  final String aim;
-
-  MindChangeCard({
-    required this.id,
-    required this.dont,
-    required this.say,
-    required this.aim,
-  });
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'dont': dont,
-        'say': say,
-        'aim': aim,
-      };
-
-  factory MindChangeCard.fromJson(Map<String, dynamic> json) => MindChangeCard(
-        id: json['id'],
-        dont: json['dont'],
-        say: json['say'],
-        aim: json['aim'],
-      );
-}
